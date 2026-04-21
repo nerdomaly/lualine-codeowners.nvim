@@ -1,0 +1,3 @@
+.luarc.json
+*.luac
+/tmp/plenary.nvim

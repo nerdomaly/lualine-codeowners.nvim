@@ -1,0 +1,9 @@
+# Fallback
+* @team/all @team/leads
+
+# Specific dir
+packages/foo @team/foo
+packages/foo-upsell @team/foo-upsell
+
+# Specific file
+packages/special/one.ts @team/one @team/two
