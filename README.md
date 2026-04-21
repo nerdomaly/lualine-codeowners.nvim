@@ -1,5 +1,7 @@
 # lualine-codeowners.nvim
 
+[![Tests](https://github.com/nerdomaly/lualine-codeowners.nvim/actions/workflows/tests.yml/badge.svg)](https://github.com/nerdomaly/lualine-codeowners.nvim/actions/workflows/tests.yml)
+
 Show the CODEOWNERS team for the current buffer in your statusline — pure Lua, no external tools required.
 
 ## Demo
