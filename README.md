@@ -8,8 +8,6 @@ Show the CODEOWNERS team for the current buffer in your statusline — pure Lua,
 
 ![demo](./docs/demo.png)
 
-> Drop a screenshot into `docs/demo.png` to populate this.
-
 ## Requirements
 
 - Neovim 0.10+ (`vim.uv` and `vim.fs.root`)
@@ -18,6 +16,7 @@ Show the CODEOWNERS team for the current buffer in your statusline — pure Lua,
 ## Install
 
 **lazy.nvim**
+
 ```lua
 {
   "nerdomaly/lualine-codeowners.nvim",
@@ -29,6 +28,7 @@ Show the CODEOWNERS team for the current buffer in your statusline — pure Lua,
 ```
 
 **packer.nvim**
+
 ```lua
 use {
   "nerdomaly/lualine-codeowners.nvim",
@@ -40,6 +40,7 @@ use {
 ```
 
 **vim-plug**
+
 ```vim
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'nerdomaly/lualine-codeowners.nvim'
@@ -117,6 +118,7 @@ The plugin walks up from the current buffer's path to find a `.git` directory, t
 ## Credits
 
 Prior art (unmaintained, Node.js-dependent):
+
 - [SebastienLeonke/nvim-codeowners](https://github.com/SebastienLeonke/nvim-codeowners)
 - [mrded/vim-github-codeowners](https://github.com/mrded/vim-github-codeowners)
 
