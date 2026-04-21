@@ -34,8 +34,8 @@ end)
 
 describe("with_icon", function()
   it("prepends icon and separator when icon is set", function()
-    local result = format.with_icon("text", cfg({ icon = "", icon_separator = "  " }))
-    assert.equals("  text", result)
+    local result = format.with_icon("text", cfg({ icon = ">", icon_separator = " " }))
+    assert.equals("> text", result)
   end)
 
   it("returns bare text when icon is empty string", function()
@@ -46,13 +46,13 @@ end)
 
 describe("display", function()
   it("with owners returns icon + formatted", function()
-    local result = format.display({ "@A" }, cfg({ icon = "", icon_separator = "  ", display_mode = "first" }))
-    assert.equals("  @A", result)
+    local result = format.display({ "@A" }, cfg({ icon = ">", icon_separator = " ", display_mode = "first" }))
+    assert.equals("> @A", result)
   end)
 
   it("nil owners with show_placeholder_when_empty=true returns placeholder", function()
-    local result = format.display(nil, cfg({ icon = "", icon_separator = "  ", placeholder = "no owner" }))
-    assert.equals("  no owner", result)
+    local result = format.display(nil, cfg({ icon = ">", icon_separator = " ", placeholder = "no owner" }))
+    assert.equals("> no owner", result)
   end)
 
   it("nil owners with show_placeholder_when_empty=false returns empty string", function()

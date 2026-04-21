@@ -39,10 +39,18 @@ function M.glob_to_lua(glob)
   -- (`^` and anywhere after a `/`) for unanchored patterns.
   local suffixes = is_dir and { "/.*$" } or { "$", "/.*$" }
   local prefixes = anchored and { "^" } or { "^", "/" }
+  -- A leading "**/" means "any directory depth, including zero" — also match
+  -- files directly at the repo root by emitting a second body without the prefix.
+  local bodies = { body }
+  if body:sub(1, 3) == ".*/" then
+    table.insert(bodies, body:sub(4))
+  end
   local patterns = {}
-  for _, p in ipairs(prefixes) do
-    for _, s in ipairs(suffixes) do
-      table.insert(patterns, p .. body .. s)
+  for _, b in ipairs(bodies) do
+    for _, p in ipairs(prefixes) do
+      for _, s in ipairs(suffixes) do
+        table.insert(patterns, p .. b .. s)
+      end
     end
   end
   return patterns
