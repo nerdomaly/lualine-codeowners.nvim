@@ -8,7 +8,7 @@ vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "BufDelete" }, {
   callback = function(args)
     if args.event == "BufDelete" then
       lookup.invalidate_buffer(args.buf)
-    elseif args.event == "BufWritePost" and args.file:match("CODEOWNERS$") then
+    elseif args.event == "BufWritePost" and lookup.is_codeowners_file(args.file) then
       lookup.reset()
     else
       lookup.invalidate_buffer(args.buf)

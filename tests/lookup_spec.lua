@@ -1,4 +1,5 @@
 local parser = require("lualine-codeowners.parser")
+local lookup = require("lualine-codeowners.lookup")
 
 -- We test lookup logic directly via the parser + matching, since lookup.lua
 -- needs live buffers and vim.fs.root. These tests validate end-to-end rule
@@ -22,6 +23,24 @@ local fixtures = vim.fn.fnamemodify(
 
 local simple_co = fixtures .. "/simple/.github/CODEOWNERS"
 local complex_co = fixtures .. "/complex/.github/CODEOWNERS"
+
+describe("is_codeowners_file", function()
+  it("accepts a file named exactly CODEOWNERS", function()
+    assert.is_true(lookup.is_codeowners_file("/repo/.github/CODEOWNERS"))
+  end)
+
+  it("rejects a file whose name only ends with CODEOWNERS", function()
+    assert.is_false(lookup.is_codeowners_file("/repo/MY_CODEOWNERS"))
+  end)
+
+  it("rejects XCODEOWNERS at repo root", function()
+    assert.is_false(lookup.is_codeowners_file("/XCODEOWNERS"))
+  end)
+
+  it("accepts CODEOWNERS at repo root", function()
+    assert.is_true(lookup.is_codeowners_file("/CODEOWNERS"))
+  end)
+end)
 
 describe("lookup resolution", function()
   describe("simple repo", function()

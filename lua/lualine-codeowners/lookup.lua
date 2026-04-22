@@ -20,7 +20,10 @@ local function cached_parse(path, mtime)
   local cached = parse_cache[path]
   if cached and cached.mtime == mtime then return cached.rules end
   local rules = parser.parse_file(path)
-  parse_cache[path] = { mtime = mtime, rules = rules }
+  -- Re-stat after the read so the cached mtime reflects what was on disk
+  -- at read time, not at the earlier find_codeowners call (TOCTOU guard).
+  local stat2 = vim.uv.fs_stat(path)
+  parse_cache[path] = { mtime = stat2 and stat2.mtime.sec or mtime, rules = rules }
   return rules
 end
 
@@ -62,6 +65,10 @@ function M.get_owners(bufnr)
 
   buf_cache[bufnr] = false
   return nil
+end
+
+function M.is_codeowners_file(path)
+  return vim.fs.basename(path) == "CODEOWNERS"
 end
 
 function M.reset()

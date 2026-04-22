@@ -15,6 +15,10 @@ M.defaults = {
 local _config = vim.deepcopy(M.defaults)
 
 function M.set(opts)
+  for _, loc in ipairs((opts or {}).locations or {}) do
+    assert(not loc:find("%.%."), "lualine-codeowners: location must not contain '..': " .. loc)
+    assert(loc:sub(1, 1) ~= "/", "lualine-codeowners: location must not be an absolute path: " .. loc)
+  end
   _config = vim.tbl_deep_extend("force", M.defaults, opts or {})
 end
 

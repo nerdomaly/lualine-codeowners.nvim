@@ -4,6 +4,15 @@ local M = {}
 -- the repo root. Best-effort: handles *, **, ?, leading /, trailing /, and
 -- bare names. Does not support character classes ([a-z] etc.).
 function M.glob_to_lua(glob)
+  -- Collapse consecutive ** segments (e.g. **/**/** → **): semantically
+  -- identical in gitignore rules, but nested .* patterns cause quadratic
+  -- backtracking in Lua's pattern engine on near-miss paths.
+  local prev
+  repeat
+    prev = glob
+    glob = glob:gsub("%*%*/%*%*", "**")
+  until glob == prev
+
   local anchored = glob:sub(1, 1) == "/" or glob:find("/", 2, true) ~= nil
   local is_dir = glob:sub(-1) == "/"
   if is_dir then glob = glob:sub(1, -2) end
